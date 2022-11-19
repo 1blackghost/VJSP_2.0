@@ -24,15 +24,39 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 #16MB
 #globals
 term=""
 
-@app.route('/old')
-def old():
-	import sqlite3
-	conn=sqlite3.connect("prime.db")
-	c=conn.cursor()
+@app.route("/old/getFromDB/<name>")
+def getOld(name):
+	if "user" in session:
+		import sqlite3
+		conn=sqlite3.connect("prime.db")
+		c=conn.cursor()
+		c.execute("""SELECT * FROM prime""")
+		msg=c.fetchall()
+		if str(name)=="ALL":
 
-	c.execute("""SELECT * FROM prime""")
-	msg=c.fetchall()
-	return render_template("old.html",msg=msg,me=session["user"])
+			return render_template("oldmsg.html",msg=msg,me=session["user"])
+		else:
+			string=""
+			lock=False
+			newArr=[]
+			for i in msg:
+				if i[3]=="bluekeySecrect":
+					string=i[0]+":"+i[1]+":"+i[2]
+					if (name==string):
+						lock=True
+					else:
+						lock=False
+				if lock:
+					newArr.append(i)
+			return render_template("oldmsg.html",msg=msg,me=session["user"])
+
+
+
+
+
+	else:
+		return redirect(url_for("dashboard"))
+
 
 
 
@@ -104,7 +128,7 @@ def create_new_message_id():
 		f.write(str(data))
 	return str(data)
 
-@app.route("/trash/<name>")
+@app.route("/trash/<name>",methods=["POST","GET"])
 def deletion_trash(name):
 	con=sqlite3.connect("messages.db")
 	c=con.cursor()
@@ -409,7 +433,19 @@ def dashboard():
 		msg=c.fetchall()
 		with open("update_user.ash") as f:
 			users=eval(f.read())
-		return render_template("index.html",msg=msg,users=users,me=session["user"])
+		conn=sqlite3.connect("prime.db")
+		c=conn.cursor()
+
+		c.execute("""SELECT * FROM prime""")
+		old=c.fetchall()
+		newArr=["ALL"]
+		string=""
+		for i in old:
+			if i[3]=="bluekeySecrect":
+				string=i[0]+":"+i[1]+":"+i[2]
+				newArr.append(string)
+
+		return render_template("index.html",msg=msg,users=users,me=session["user"],old=newArr)
 	else:
 		return redirect(url_for("signin"))
 

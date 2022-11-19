@@ -1,4 +1,4 @@
-   <div id="update">
+  <div id="update">
 
                 <div id="message1">
                     {% for message in msg %}
@@ -9,7 +9,7 @@
                                     {{message[1]}}
                                 </div>
                                 <button class="like" id="{{message[2]}}" onclick="getL({{message[2]}})">{{message[3]}}<i class="fa fa-heart"></i></button>
-                                <button id="delete"><i class="fa fa-trash"></i></button>
+                                <button id="delete" onclick="trashF({{message[2]}})"><i class="fa fa-trash"></i></button>
                                 
                                 
                             </div>
@@ -19,8 +19,7 @@
                                 <div class="message">
                                     {{message[1]}}
                                 </div>
-                                <button class="like" id="{{message[2]}}" onclick="getL({{message[2]}})">{{message[3]}}<i class="fa fa-heart"></i></button>
-                                <button id="delete"><i class="fa fa-trash"></i></button>
+                                <button class="like" id="{{message[2]}}" onclick="getL({{message[2]}});">{{message[3]}}<i class="fa fa-heart"></i></button>
 
                             </div>
                         {%endif%}

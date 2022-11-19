@@ -30,9 +30,10 @@
                 </div>
                 <div id="archive" class="archive">
                     <button id="close" onclick="exit1()"><i class="fa fa-close"></i></button>
-                    <a href="" class="date" id="date"><b>20-03-2897</b></a>
-                    <a href="" class="date" id="date"><b>21-03-2897</b></a>
-                    <a href="" class="date" id="date"><b>22-03-2897</b></a>
+                    {%for i in old%}
+                        <a href="/old/getFromDB/{{i}}" class="date" id="date"><b>{{i}}</b></a>
+                    {%endfor%}
+                    
                     
                 </div>
 
@@ -54,7 +55,7 @@
                                     {{message[1]}}
                                 </div>
                                 <button class="like" id="{{message[2]}}" onclick="getL({{message[2]}})">{{message[3]}}<i class="fa fa-heart"></i></button>
-                                <button id="delete"><i class="fa fa-trash"></i></button>
+                                <button id="delete" onclick="trashF({{message[2]}})"><i class="fa fa-trash"></i></button>
                                 
                                 
                             </div>
@@ -64,8 +65,7 @@
                                 <div class="message">
                                     {{message[1]}}
                                 </div>
-                                <button class="like" id="{{message[2]}}" onclick="getL({{message[2]}})">{{message[3]}}<i class="fa fa-heart"></i></button>
-                                <button id="delete"><i class="fa fa-trash"></i></button>
+                                <button class="like" id="{{message[2]}}" onclick="getL({{message[2]}});">{{message[3]}}<i class="fa fa-heart"></i></button>
 
                             </div>
                         {%endif%}
@@ -74,9 +74,12 @@
                     <button onclick='' id="scroll" class="scroll"><i class="fa fa-sort-down"></i></button>
                 </div>
             </div>
-
+                <form action = "/success" method = "post" enctype="multipart/form-data">
+                        <input id="upload"><i class="fa fa-paperclip"></i></input>
+                        <input type = "submit" value="Upload">
+ 
+                </form>
                  <form id="searchForm" name="searchForm" method="">
-                        <button id="upload"><i class="fa fa-paperclip"></i></button>
                         <input autofocus name="text" type="text" id="text" autocomplete="off"  requied placeholder="Type Message here">
                         <button type="submit" id="send"><i class="fa fa-send"></i></button>
                 </form>
@@ -87,13 +90,19 @@
 
 <script>
 
-     function getL(e){
+    function colorChange(e){
         if(document.getElementById(e).style.color==="black"){
             document.getElementById(e).style.color="red";
             console.log("here");        }
         else{
             document.getElementById(e).style.color="black";
         }
+
+
+
+    }
+    function getL(e){
+    colorChange(e);
       $.ajax({
         url:'/getLike/'+e,
         type:'POST',
