@@ -1,0 +1,31 @@
+<div id="update">
+
+                <div id="message1">
+                    {% for message in msg %}
+                        {%if message[0]==me%}
+                            <div id="usermsg">
+                                <span><img id="profimg"src="/static/prof.jpg" alt=""><c id="name-user" class="name-user">{{message[0]}}</c></span>
+                                <div class="message">
+                                    {{message[1]}}
+                                </div>
+                                <button id="like"  onclick="like()"><i class="fa fa-heart"></i></button>
+                                <button id="delete"><i class="fa fa-trash"></i></button>
+                                
+                                
+                            </div>
+                        {%else%}
+                            <div id="pblcmsg">
+                                <span><img id="profimg"src="/static/prof.jpg" alt=""><c id="name-users" class="name-user">{{message[0]}}</c></span>
+                                <div class="message">
+                                    {{message[1]}}
+                                </div>
+                                <button id="like" onclick="like()"><i class="fa fa-heart"></i></button>
+                                <button id="delete"><i class="fa fa-trash"></i></button>
+
+                            </div>
+                        {%endif%}
+
+                {% endfor %}
+                    <button id="scroll" class="scroll"><i class="fa fa-sort-down"></i></button>
+                </div>
+            </div>
