@@ -88,6 +88,12 @@
 <script>
 
      function getL(e){
+        if(document.getElementById(e).style.color==="black"){
+            document.getElementById(e).style.color="red";
+            console.log("here");        }
+        else{
+            document.getElementById(e).style.color="black";
+        }
       $.ajax({
         url:'/getLike/'+e,
         type:'POST',
@@ -95,14 +101,6 @@
 
 
       });
-        if(document.getElementByClass(e).style.color==="black"){
-            document.getElementByClass(e).style.color="red";
-            console.log("here");
-            window.location='/getLike/'+e;
-        }
-        else{
-            document.getElementByClass(e).style.color="black";
-        }
 
     }
 
