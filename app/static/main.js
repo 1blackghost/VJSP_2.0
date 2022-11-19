@@ -1,11 +1,3 @@
-function like(){
-        if(document.getElementById("like").style.color==="black"){
-            document.getElementById("like").style.color="red";
-        }
-        else{
-            document.getElementById("like").style.color="black";
-        }
-}
 
 function users(){
     document.getElementById("users").style.visibility="visible";

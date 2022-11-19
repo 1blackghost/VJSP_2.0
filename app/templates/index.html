@@ -53,7 +53,7 @@
                                 <div class="message">
                                     {{message[1]}}
                                 </div>
-                                <button id="like"  onclick="like()"><i class="fa fa-heart"></i></button>
+                                <button  id="{{message[2]}}" onclick="getL({{message[2]}})">{{message[3]}}<i class="fa fa-heart"></i></button>
                                 <button id="delete"><i class="fa fa-trash"></i></button>
                                 
                                 
@@ -64,7 +64,7 @@
                                 <div class="message">
                                     {{message[1]}}
                                 </div>
-                                <button id="like" onclick="like()"><i class="fa fa-heart"></i></button>
+                                <button class="like" id="{{message[2]}}" onclick="getL({{message[2]}})">{{message[3]}}<i class="fa fa-heart"></i></button>
                                 <button id="delete"><i class="fa fa-trash"></i></button>
 
                             </div>
@@ -74,6 +74,7 @@
                     <button onclick='' id="scroll" class="scroll"><i class="fa fa-sort-down"></i></button>
                 </div>
             </div>
+
                  <form id="searchForm" name="searchForm" method="">
                         <button id="upload"><i class="fa fa-paperclip"></i></button>
                         <input autofocus name="text" type="text" id="text" autocomplete="off"  requied placeholder="Type Message here">
@@ -92,8 +93,19 @@
         type:'POST',
         dataType:'json',
 
+
       });
+        if(document.getElementByClass(e).style.color==="black"){
+            document.getElementByClass(e).style.color="red";
+            console.log("here");
+            window.location='/getLike/'+e;
+        }
+        else{
+            document.getElementByClass(e).style.color="black";
+        }
+
     }
+
      function trashF(e){
       $.ajax({
         url:'/trash/'+e,
@@ -123,11 +135,8 @@
                 audio.play();
                 
                 text=value;
-                $("#update").click(function() {
-                    $([document.documentElement, document.body]).animate({
-                        scrollTop: $("# update").offset().top
-                    }, 2000);
-                });          }
+                //nav
+          }
 
         }
 
